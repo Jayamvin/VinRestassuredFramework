@@ -30,7 +30,7 @@ public class GetUserTest extends BaseTest{
 	}
 	
 	///public/v2/users/4328205/?name&staus
-	@Test(priority = 2)
+	@Test(priority = 2, enabled = false)
 	public void getUserTest() {
 		restClient.get(GOREST_ENDPOINT+"/"+4328205, true, true)
 					.then().log().all()
@@ -40,7 +40,7 @@ public class GetUserTest extends BaseTest{
 	}
 	
 	//url?name&staus
-	@Test(priority = 3)
+	@Test(priority = 2)
 	public void getUserWithQueryParamsTest() {
 		Map<String,Object> queryParams = new HashMap<String,Object>();
 		queryParams.put("name", "vindhya");

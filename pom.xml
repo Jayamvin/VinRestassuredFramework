@@ -20,7 +20,7 @@
 		<aspectj.version>1.9.19</aspectj.version>
 		<allure.version>2.22.1</allure.version>
 		<extentreports-version>5.0.8</extentreports-version>
-		
+
 	</properties>
 
 	<dependencies>
@@ -32,7 +32,7 @@
 		</dependency>
 
 		<dependency>
-			
+
 			<groupId>io.rest-assured</groupId>
 			<artifactId>json-schema-validator</artifactId>
 			<version>5.3.1</version>
@@ -81,13 +81,13 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.28</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
 			<version>${extentreports-version}</version>
 		</dependency>
-		
+
 
 	</dependencies>
 
@@ -96,33 +96,32 @@
 			defaults (may be moved to parent pom) -->
 			<plugins>
 				<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.20</version>
-
-				<configuration>
-					<forkCount>3</forkCount>
-					<reuseForks>true</reuseForks>
-					<suiteXmlFiles>
-						<suiteXmlFile>src/test/resources/testrunners/testng_regression.xml</suiteXmlFile>
-						<!-- <suiteXmlFile>${suiteXmlFile}</suiteXmlFile> -->
-					</suiteXmlFiles>
-				</configuration>
-				
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.1</version>
+					<configuration>
+						<source>1.8</source>
+						<target>1.8</target>
+					</configuration>
 				</plugin>
-				
-				
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.20</version>
+
+					<configuration>
+						<forkCount>3</forkCount>
+						<reuseForks>true</reuseForks>
+						<suiteXmlFiles>
+							<suiteXmlFile>
+								src/test/resources/testrunners/testng_regression.xml</suiteXmlFile>
+							<!-- <suiteXmlFile>${suiteXmlFile}</suiteXmlFile> -->
+						</suiteXmlFiles>
+					</configuration>
+
+				</plugin>
+
 			</plugins>
 		</pluginManagement>
 	</build>
