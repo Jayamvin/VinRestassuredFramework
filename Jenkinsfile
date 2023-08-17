@@ -61,7 +61,7 @@ pipeline
         
         stage('Publish Extent Report'){
             steps{
-                     publishHTML([allowMissing: false,
+                     publishHTML([allowMissing: true,
                                   alwaysLinkToLastBuild: false, 
                                   keepAll: false, 
                                   reportDir: 'Reports', 
@@ -91,7 +91,7 @@ pipeline
         
          stage('Publish Extent Report after sanity'){
             steps{
-                     publishHTML([allowMissing: false,
+                     publishHTML([allowMissing: true,
                                   alwaysLinkToLastBuild: false, 
                                   keepAll: false, 
                                   reportDir: 'Reports', 
