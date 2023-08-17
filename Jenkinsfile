@@ -13,7 +13,7 @@ pipeline
             steps
             {
                  git 'https://github.com/jglick/simple-maven-project-with-tests.git'
-                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                 bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
             post 
             {
@@ -37,26 +37,26 @@ pipeline
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     git 'https://github.com/Jayamvin/VinRestassuredFramework.git'
-                    sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_regression.xml"
+                    bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/TestRunners/testng_regression.xml"
                     
                 }
             }
         }
                 
      
-        stage('Publish Allure Reports') {
-           steps {
-                script {
-                    allure([
-                        includeProperties: false,
-                        jdk: '',
-                        properties: [],
-                        reportBuildPolicy: 'ALWAYS',
-                        results: [[path: '/allure-results']]
-                    ])
-                }
-            }
-        }
+        //stage('Publish Allure Reports') {
+        //  steps {
+        //        script {
+        //            allure([
+        //                includeProperties: false,
+        //               jdk: '',
+        //                properties: [],
+        //                reportBuildPolicy: 'ALWAYS',
+        //                results: [[path: '/allure-results']]
+        //            ])
+        //        }
+        //    }
+        //  }
         
         
         stage('Publish Extent Report'){
@@ -64,9 +64,9 @@ pipeline
                      publishHTML([allowMissing: false,
                                   alwaysLinkToLastBuild: false, 
                                   keepAll: false, 
-                                  reportDir: 'reports', 
+                                  reportDir: 'Reports', 
                                   reportFiles: 'APIExecutionReport.html', 
-                                  reportName: 'API HTML Extent Report', 
+         //                         reportName: 'API HTML Extent Report', 
                                   reportTitles: ''])
             }
         }
@@ -82,7 +82,7 @@ pipeline
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     git 'https://github.com/Jayamvin/VinRestassuredFramework.git'
-                    sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml"
+                    bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/TestRunners/testng_regression.xml"
                     
                 }
             }
@@ -96,7 +96,7 @@ pipeline
                                   keepAll: false, 
                                   reportDir: 'Reports', 
                                   reportFiles: 'APIExecutionReport.html', 
-                                  reportName: 'API HTML Extent Sanity Report', 
+          //                        reportName: 'API HTML Extent Sanity Report', 
                                   reportTitles: ''])
             }
         }
