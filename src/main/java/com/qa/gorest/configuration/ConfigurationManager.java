@@ -24,7 +24,7 @@ public class ConfigurationManager {
 				try {
 					if (envName == null) {
 						System.out.println("no env is given...hence running tests on QA env... ");
-						ip = new FileInputStream("./src/test/resources/config/qa.config.properties");
+						ip = new FileInputStream("./src/test/resources/Config/config.properties");
 					} else {
 						System.out.println("Running tests on env: " + envName);
 
