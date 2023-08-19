@@ -96,7 +96,7 @@ pipeline
                                   keepAll: false, 
                                   reportDir: 'Reports', 
                                   reportFiles: 'APIExecutionReport.html', 
-          //                        reportName: 'API HTML Extend Sanity Report', 
+                                  reportName: 'API HTML Extend Sanity Report', 
                                   reportTitles: ''])
             }
         }
