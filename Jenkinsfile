@@ -91,7 +91,7 @@ pipeline
         
          stage('Publish Extent Report after sanity'){
             steps{
-                     publishHTML([allowMissing: true,
+                     publishHTML([allowMissing: false,
                                   alwaysLinkToLastBuild: false, 
                                   keepAll: false, 
                                   reportDir: 'Reports', 
