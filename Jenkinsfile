@@ -61,9 +61,9 @@ pipeline
         
         stage('Publish Extent Report'){
             steps{
-        //             publishHTML([allowMissing: false,
-        //                          alwaysLinkToLastBuild: false, 
-        //                          keepAll: false, 
+                     publishHTML([allowMissing: false,
+                                 alwaysLinkToLastBuild: false, 
+                                  keepAll: false, 
                                   reportDir: 'Reports', 
                                   reportFiles: 'APIExecutionReport.html', 
                                   reportName: 'API HTML Extend Report', 
