@@ -50,16 +50,16 @@ pipeline
     steps {
         script {
         
-        def exitCode = bat(script: "docker run --name APIAutomation Pipeline${BUILD_NUMBER} -e MAVEN_OPTS='-Dsurefire.suiteXmlFiles=.src/test/resources/TestRunners/testng_regression.xml' vnalluri2/vinapiautomation:latest", returnStatus: true)
+        def exitCode = bat(script: "docker run --name APIAutomationpipeline${BUILD_NUMBER} -e MAVEN_OPTS='-Dsurefire.suiteXmlFiles=.src/test/resources/TestRunners/testng_regression.xml' vnalluri2/vinapiautomation:latest", returnStatus: true)
             if (exitCode != 0) {
                 currentBuild.result = 'FAILURE' // Mark the build as failed if tests fail
             }
             
             // Even if tests fail, copy the report (if present)
-            bat "docker start APIAutomation Pipeline${BUILD_NUMBER}"
+            bat "docker start APIAutomationpipeline'${BUILD_NUMBER}"
        	   // bat "sleep 60"
-            bat "docker cp APIAutomation Pipeline${BUILD_NUMBER}:/app/Reports/APIExecutionReport.html ${WORKSPACE}/reports"
-            bat "docker rm -f APIAutomation Pipeline${BUILD_NUMBER}"
+            bat "docker cp APIAutomationpipeline${BUILD_NUMBER}:/app/Reports/APIExecutionReport.html ${WORKSPACE}/reports"
+            bat "docker rm -f APIAutomationpipeline${BUILD_NUMBER}"
        			 }
     		}
 		}
