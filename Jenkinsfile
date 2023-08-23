@@ -1,6 +1,5 @@
 
-//This Jenkinsfile is for taking docker image at the qa stage 
-
+//jenkinsfile working for me 
 pipeline 
 {
     agent any
@@ -8,13 +7,6 @@ pipeline
     tools{
     	maven 'maven'
         }
-        
-    environment{
-   
-        BUILD_NUMBER = "${BUILD_NUMBER}"
-   
-    }
-    
 
     stages 
     {
@@ -34,7 +26,7 @@ pipeline
                 }
             }
         }
-
+        
         
         
         stage("Deploy to QA"){
@@ -42,45 +34,80 @@ pipeline
                 echo("deploy to qa done")
             }
         }
-             
-             
                 
-                
-        stage('Run Docker Image with Regression Tests') {
-    steps {
-        script {
-        
-        def exitCode = bat(script: "docker run --name vinapiautomation${BUILD_NUMBER} -e MAVEN_OPTS='-Dsurefire.suiteXmlFiles=.src/test/resources/TestRunners/testng_regression.xml' vnalluri2/vinapiautomation:latest", returnStatus: true)
-            if (exitCode != 0) {
-                currentBuild.result = 'FAILURE' // Mark the build as failed if tests fail
+        stage('Regression API Automation Test') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    git 'https://github.com/Jayamvin/VinRestassuredFramework.git'
+                    bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/TestRunners/testng_regression.xml"
+                    
+                }
             }
-            
-            // Even if tests fail, copy the report (if present)
-            bat "docker start vinapiautomation'${BUILD_NUMBER}"
-       	   // bat "sleep 60"
-            bat "docker cp vinapiautomation${BUILD_NUMBER}:/app/Reports/APIExecutionReport.html ${WORKSPACE}/reports"
-            bat "docker rm -f vinapiautomation${BUILD_NUMBER}"
-       			 }
-    		}
-		}
-		
-		
-		
-		stage('Publish Regression Extent Report'){
+        }
+                
+     
+        //stage('Publish Allure Reports') {
+        //  steps {
+        //        script {
+        //            allure([
+        //                includeProperties: false,
+        //               jdk: '',
+        //                properties: [],
+        //                reportBuildPolicy: 'ALWAYS',
+        //                results: [[path: '/allure-results']]
+        //            ])
+        //        }
+        //    }
+        //  }
+        
+        
+        stage('Publish Extent Report'){
             steps{
                      publishHTML([allowMissing: false,
-                                  alwaysLinkToLastBuild: false, 
+                                 alwaysLinkToLastBuild: false, 
                                   keepAll: false, 
-                                  reportDir: 'reports', 
+                                  reportDir: 'Reports', 
                                   reportFiles: 'APIExecutionReport.html', 
-                                  reportName: 'API HTML Regression Extent Report', 
+                                  reportName: 'API HTML Extend Report', 
                                   reportTitles: ''])
             }
         }
         
         
-       
-
-         
+         stage("Deploy to STAGE"){
+            steps{
+                echo("deploy to STAGE done")
+            }
+        }
+        
+        stage('Sanity Automation Test') {
+            steps {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    git 'https://github.com/Jayamvin/VinRestassuredFramework.git'
+                    bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/TestRunners/testng_regression.xml"
+                    
+                }
+            }
+        }
+        
+        
+         stage('Publish Extent Report after sanity'){
+            steps{
+                     publishHTML([allowMissing: false,
+                                  alwaysLinkToLastBuild: false, 
+                                  keepAll: false, 
+                                  reportDir: 'Reports', 
+                                  reportFiles: 'APIExecutionReport.html', 
+                                  reportName: 'API HTML Extend Sanity Report', 
+                                  reportTitles: ''])
+            }
+        }
+        
+        
+        stage("Deploy to PROD"){
+            steps{
+                echo("deploy to PROD")
+            }
+        }
     }
 }
